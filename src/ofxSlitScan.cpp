@@ -333,7 +333,8 @@ void ofxSlitScan::drawVerticalTransition( int num_rows, glm::vec2 pos, glm::vec2
 
     float mask_pos = 0.0f;
     // float mask_pos = 1.0 / 5.0;
-    float mask_target = pos.y + size.y * mask_pos;
+    float mask_target = pos.y + size.y * mask_pos - size.y / num_rows;
+
     for( int i = 0; i < num_rows; i++ ) {
 
 
@@ -344,7 +345,7 @@ void ofxSlitScan::drawVerticalTransition( int num_rows, glm::vec2 pos, glm::vec2
         float img_y_pos = pos.y + start_size * i;
         if( i > num_rows * mask_pos ) {
             float move_dist = abs( img_y_pos - mask_target );
-            where.pos.y = img_y_pos + size.y - size.y * anim_move_up - move_dist * anim_mask_out;
+            where.pos.y = img_y_pos + size.y - (size.y) * anim_move_up - move_dist * anim_mask_out;
         }
         else {
             float move_dist = abs( img_y_pos - mask_target );
