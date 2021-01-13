@@ -5,53 +5,46 @@
 //  Created by Nicole Yi Messier on 4/2/20.
 //
 
-#pragma mark once
+#pragma once
 
-#include "ofMain.h"
-
+#include "ofColor.h"
+#include "ofMesh.h"
 
 class MeshHelper {
-public:
-    
-    static MeshHelper& one()
+  public:
+    static MeshHelper &one()
     {
         static MeshHelper instance;
         return instance;
-        
-    }; 
-    
-    void setup();
+    };
 
     // --- STRUCTS --- //
-    struct Quad{
+    struct Quad {
         glm::vec3 tl, tr, br, bl;
     };
-    
-    struct TexQuad{
-        Quad verts;
+
+    struct TexQuad {
+        Quad vertices;
         Quad texCoords;
     };
-    
-    struct ColQuad{
-        Quad verts;
-        ofColor c;
+
+    struct ColQuad {
+        Quad    verts;
+        ofColor color;
     };
-    
+
     struct RectData {
         glm::vec2 size;
-        glm::vec2 pos;
+        glm::vec2 position;
     };
-    
+
     // --- QUAD GETTERS --- //
-    TexQuad getQuad(RectData &where, RectData & tex);
+    static TexQuad getQuad( const RectData &where, const RectData &tex );
 
 
-    ColQuad getColQuad(RectData &where, ofColor &c);
-    
+    static ColQuad getColQuad( const RectData &where, const ofColor &color );
+
     // --- DRAWING TO MESH --- //
-    void addToMesh(ofMesh &mesh, TexQuad &quad);
-    void addToMesh(ofMesh &mesh, ColQuad &quad);
-    
-private:
-    
+    void addToMesh( ofMesh &mesh, const TexQuad &quad ) const;
+    void addToMesh( ofMesh &mesh, const ColQuad &quad ) const;
 };

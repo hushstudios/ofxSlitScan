@@ -1,56 +1,52 @@
 #pragma once
-#include "MeshHelper.h"
-#include "SlitScanData.h"
-#include "ofMain.h"
+
+#include "ofMesh.h"
 
 class ofxSlitScan {
   public:
-    ofxSlitScan();
-    ~ofxSlitScan();
-
-    void setup();
-    void update( float dt );
-    void draw();
+    ofxSlitScan() = default;
 
     //! city stream types
-    void drawVerticalSlotIn(
-        int num_cols, glm::vec2 size, glm::vec2 content_size, ofMesh &mesh, glm::vec2 where_start, glm::vec2 where_target, float anim_val );
+    void drawVerticalSlotIn( int numCols, const glm::vec2 &size, const glm::vec2 &contentSize, ofMesh &mesh, const glm::vec2 &whereStart,
+        const glm::vec2 &whereTarget, float animVal ) const;
 
+    static void drawHorizontalPixel(
+        const glm::vec2 &position, const glm::vec2 &size, const glm::vec2 &contentSize, ofMesh &mesh, float animVal, float targetY );
 
-    void drawHorizontalPixel( glm::vec2 pos, glm::vec2 size, glm::vec2 content_size, ofMesh &mesh, float anim_val, float target_ypos );
-
-
-    void drawHorSwipeVertSC(
-        int num_cols, glm::vec2 pos, glm::vec2 size, glm::vec2 content_size, ofMesh &mesh, float anim_wipe, float anim_slit, bool lr = false );
+    void drawHorSwipeVertSc( int numCols, const glm::vec2 &position, const glm::vec2 &size, const glm::vec2 &contentSize, ofMesh &mesh,
+        float animWipe, float animSlit, bool lr = false ) const;
 
     // story stream
-    void drawVerticalTransition( int num_rows, glm::vec2 pos, glm::vec2 size, glm::vec2 content_size, ofMesh &mesh, float anim_slit,
-        float anim_move_up, float anim_mask_out );
+    void drawVerticalTransition( int numRows, const glm::vec2 &position, const glm::vec2 &size, const glm::vec2 &contentSize, ofMesh &mesh,
+        float animSlit, float animMoveUp, float animMaskOut ) const;
 
-    void drawVerticalBase(
-        int num_rows, glm::vec2 pos, glm::vec2 size, ofTexture &tex_ref, ofMesh &mesh, float anim_move_up, float offset_y );
+    void drawVerticalBase( int numRows, const glm::vec2 &position, const glm::vec2 &size, const ofTexture &texture, ofMesh &mesh,
+        float animMoveUp, float offsetY ) const;
 
-    void drawVerticalOverlay(
-        int num_rows, glm::vec2 pos, glm::vec2 size, ofTexture &tex_ref, ofMesh &mesh, float anim_move_up, float offset_y );
+    static void drawVerticalOverlay( int numRows, const glm::vec2 &position, const glm::vec2 &size, const ofTexture &texture, ofMesh &mesh,
+        float animMoveUp, float offsetY );
 
     // vss
-    void typeVSSSlotIn( int num_cols, glm::vec2 size, glm::vec2 content_size, ofMesh &mesh, glm::vec2 where_start, glm::vec2 where_target,
-        float xoffset, float anim_val );
+    void typeVssSlotIn( int numCols, const glm::vec2 &size, const glm::vec2 &contentSize, ofMesh &mesh, const glm::vec2 &whereStart,
+        const glm::vec2 &whereTarget, float offsetX, float animVal ) const;
 
-    void typeVSSSlotOut( int num_cols, glm::vec2 size, glm::vec2 content_size, ofMesh &mesh, glm::vec2 where_start, glm::vec2 where_target,
-        float xoffset, float anim_val );
+    void typeVssSlotOut( int numCols, const glm::vec2 &size, const glm::vec2 &contentSize, ofMesh &mesh, const glm::vec2 &whereStart,
+        const glm::vec2 &whereTarget, float offsetX, float animVal ) const;
 
     // no pixel stretch
-    void drawVerticalMaskOut( int num_cols, glm::vec2 pos, glm::vec2 size, glm::vec2 content_size, ofMesh &mesh, vector<float> &anim_vals );
+    static void drawVerticalMaskOut( int numCols, const glm::vec2 &position, const glm::vec2 &size, const glm::vec2 &contentSize,
+        ofMesh &mesh, const std::vector<float> &animValues );
 
-    void drawMesh( ofTexture &tex_ref, ofMesh &mesh );
+    static void drawMesh( const ofTexture &texture, const ofMesh &mesh );
 
     // text animation
-    void drawMaskIn(
-        int num_rows, float row_height, glm::vec2 content_size, ofMesh &mesh, glm::vec2 pos, float anim_val );
+    static void drawMaskIn(
+        int numRows, float rowHeight, const glm::vec2 &contentSize, ofMesh &mesh, const glm::vec2 &position, float animVal );
 
   private:
-    float blinnWyvillCosineApproximation( float x );
-    float doubleOddPolynomialSeat( float x, float a, float b, int n );
-    float doublePolynomialSigmoid( float x, float a, float b, int n );
+    //! Blinn-Wyvill.
+    static float cosineApproximation( float x );
+
+    float doubleOddPolynomialSeat( float x, float a, float b, int n ) const;
+    float doublePolynomialSigmoid( float x, float a, float b, int n ) const;
 };
